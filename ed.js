@@ -8,7 +8,7 @@ export const enc=async(file,pass)=>{
   console.log(`enc(${JSON.stringify(algo)},key(${pass}),${new Uint8Array(data)})`);
   const ab=await window.crypto.subtle.encrypt(algo,key,data);
   console.log(`result:${new Uint8Array(ab)}`);
-  return ab;
+  return new File([iv,ab],file.name+"-e");
 };
 
 export const dec=async(res,pass)=>{
