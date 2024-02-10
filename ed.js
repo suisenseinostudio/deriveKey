@@ -21,6 +21,9 @@ export const dec=async(file,pass)=>{
   const key=await deriveKey(pass,salt);
   console.log(`dec(${JSON.stringify(algo)},key(${pass}),${new Uint8Array(ab)})`);
   const rtn=await crypto.subtle.decrypt(algo,key,ab);
-  console.log(`result:${new Uint8Array(rtn)}`);
-  return rtn;
+  if((new TextDecoder()).decode(rtn.slice(0,12))==(new TextDecoder()).decode(iv)){
+    return new Blob([result.slice(12,rtn.byteLength)]);
+  }else{
+    return null;
+  }
 };
