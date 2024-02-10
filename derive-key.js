@@ -7,7 +7,7 @@ const importKey=async(pass)=>{
   }
 };
 
-export const deriveKey=async(pass,salt=self.crypto.getRandomValues(new Uint8Array(16)))=>{
+export const deriveKey=async(pass,salt)=>{
   try{
     const algo={name:"PBKDF2",hash:"SHA-256",salt,iterations:100000};
     const base=await importKey(pass);
