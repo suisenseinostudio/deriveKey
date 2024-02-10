@@ -4,7 +4,7 @@ export const enc=async(file,pass)=>{
   const iv=window.crypto.getRandomValues(new Uint8Array(12));
   const algo={name:"AES-GCM",iv};
   const salt=self.crypto.getRandomValues(new Uint8Array(16));
-  const key=await deriveKey(pass);
+  const key=await deriveKey(pass,salt);
   const data=await (new Blob([iv,file])).arrayBuffer();
   console.log(`enc(${JSON.stringify(algo)},key(${pass}),${new Uint8Array(data)})`);
   const ab=await window.crypto.subtle.encrypt(algo,key,data);
