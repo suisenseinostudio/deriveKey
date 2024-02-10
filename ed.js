@@ -11,11 +11,12 @@ export const enc=async(file,pass)=>{
   return new File([iv,ab],file.name+"-e");
 };
 
-export const dec=async(res,pass)=>{
+export const dec=async(file,pass)=>{
+  const res=await file.arrayBuffer();
+  const ab=res.slice(12,res.byteLength);
   const iv=new Uint8Array(res,0,12);
   const algo={name:"AES-GCM",iv};
   const key=await deriveKey(pass);
-  const ab=res.slice(12,res.byteLength);
   console.log(`dec(${JSON.stringify(algo)},key(${pass}),${new Uint8Array(ab)})`);
   const rtn=await crypto.subtle.decrypt(algo,key,ab);
   console.log(`result:${new Uint8Array(rtn)}`);
