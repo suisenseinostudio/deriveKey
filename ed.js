@@ -19,7 +19,6 @@ export const dec=async(file,pass)=>{
   const ab=res.slice(12+16,res.byteLength);
   const algo={name:"AES-GCM",iv};
   const key=await deriveKey(pass,salt);
-  console.log(`dec(${JSON.stringify(algo)},key(${pass}),${new Uint8Array(ab)})`);
   const rtn=await crypto.subtle.decrypt(algo,key,ab);
   if((new TextDecoder()).decode(rtn.slice(0,12))==(new TextDecoder()).decode(iv)){
     return new Blob([rtn.slice(12,rtn.byteLength)]);
